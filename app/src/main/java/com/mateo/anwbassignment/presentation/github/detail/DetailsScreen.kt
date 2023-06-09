@@ -101,29 +101,30 @@ fun GithubRepoEventView(
         is DetailsScreenUiState.Success -> {
             // in GithubRepoInfoRepository we already check if we have an event, call to .first() should get the event
             // if the item is not there DetailsScreenUiState.Error  will be sent instead which is handled below
-            val lastEvent = uiState.data.first()
-            Text(
-                stringResource(
-                    id = R.string.last_event_author,
-                    lastEvent.actor.displayLogin
-                ),
-                style = MaterialTheme.typography.titleMedium,
-            )
-            Text(
-                stringResource(id = R.string.last_event_type, lastEvent.type),
-                style = MaterialTheme.typography.titleMedium,
-            )
-            Text(
-                stringResource(
-                    id = R.string.last_event_date,
-                    lastEvent.createdAt.format()
-                ),
-                style = MaterialTheme.typography.titleMedium,
-            )
-            AppTextLink(
-                text = lastEvent.actor.url,
-                url = lastEvent.actor.url
-            )
+            uiState.data.first().run {
+                Text(
+                    stringResource(
+                        id = R.string.last_event_author,
+                        actor.displayLogin
+                    ),
+                    style = MaterialTheme.typography.titleMedium,
+                )
+                Text(
+                    stringResource(id = R.string.last_event_type, type),
+                    style = MaterialTheme.typography.titleMedium,
+                )
+                Text(
+                    stringResource(
+                        id = R.string.last_event_date,
+                        createdAt.format()
+                    ),
+                    style = MaterialTheme.typography.titleMedium,
+                )
+                AppTextLink(
+                    text = actor.url,
+                    url = actor.url
+                )
+            }
         }
     }
 }

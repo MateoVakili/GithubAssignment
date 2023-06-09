@@ -19,7 +19,7 @@ class DetailsViewModel @Inject constructor(
     private val repository: GithubRepoInfoRepository,
 ) : ViewModel() {
 
-    val args: DetailRoute.Args = checkNotNull(savedStateHandle[DetailRoute.ARG_KEY_DETAILS])
+    val args: DetailsPageArg = checkNotNull(savedStateHandle[DetailRoute.ARG_KEY_DETAILS])
     private val _uiState = MutableStateFlow<DetailsScreenUiState>(DetailsScreenUiState.Loading)
     val uiState = _uiState.asStateFlow()
 

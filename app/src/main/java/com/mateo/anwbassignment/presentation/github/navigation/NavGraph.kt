@@ -5,6 +5,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.mateo.anwbassignment.presentation.AppState
+import com.mateo.anwbassignment.presentation.github.detail.DetailsPageParamType
 import com.mateo.anwbassignment.presentation.github.detail.DetailsScreen
 import com.mateo.anwbassignment.presentation.github.repos.RepositoriesScreen
 
@@ -34,13 +35,13 @@ fun NavGraphBuilder.repositoriesNavGraph(
         // Details Screen
         composable(
             route = RepositoriesFlowDestinations.DetailRoute.route,
+            content =  { DetailsScreen() },
             arguments = listOf(
                 navArgument(RepositoriesFlowDestinations.DetailRoute.ARG_KEY_DETAILS) {
-                    type = RepositoriesFlowDestinations.DetailRoute.DetailsPageParamType()
+                    type = DetailsPageParamType()
                     nullable = false
                 }
             ),
-            content =  { DetailsScreen() }
         )
     }
 }

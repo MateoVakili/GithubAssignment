@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.mateo.anwbassignment.R
+import com.mateo.anwbassignment.presentation.github.detail.DetailsPageArg
 import com.mateo.anwbassignment.presentation.github.navigation.RepositoriesFlowDestinations.DetailRoute
 import com.mateo.anwbassignment.presentation.github.navigation.RepositoriesFlowDestinations.RepositoriesRoute
 import com.mateo.anwbassignment.presentation.util.view.decode
@@ -35,7 +36,7 @@ class AppState(
 
     private val currentBackStackEntryArg: String?
         @Composable get() = navController.currentBackStackEntry
-            ?.arguments?.parcelable<DetailRoute.Args>(
+            ?.arguments?.parcelable<DetailsPageArg>(
                 DetailRoute.ARG_KEY_DETAILS)?.repo?.decode()
 
     val currentTitle: String
