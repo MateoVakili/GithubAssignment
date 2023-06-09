@@ -24,7 +24,6 @@ class GithubMetaDataInterceptor @Inject constructor() : Interceptor {
 
     companion object {
         // Could also maintain this in gradle and go further to hide using local properties
-        // or use github secrets and then access via fastlane for example
         // I thought this would serve the purpose in this case I have removed mine please replace with yours !
         private const val GITHUB_TOKEN = ""
     }
