@@ -1,5 +1,6 @@
 package com.mateo.anwbassignment.data.github.repository
 
+import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -59,7 +60,7 @@ class GithubRepoInfoRepositoryImpl @Inject constructor(
             if(res.isNotEmpty()) {
                 LoadingResult.Success(res)
             } else {
-                LoadingResult.Error(exceptionMapper.mapException(EmptyResponse()))
+                LoadingResult.Error(EmptyResponse())
             }
         } catch (exception: Exception) {
             LoadingResult.Error(exceptionMapper.mapException(exception))

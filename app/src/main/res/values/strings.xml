@@ -6,7 +6,7 @@
     <string name="core_error_title">Oops</string>
     <string name="core_error_message">Something went wrong ! please try again.</string>
     <string name="core_empty_title">Oh no!</string>
-    <string name="core_empty_message">There is nothing to see show here.</string>
+    <string name="core_empty_message">Seems like there is no info to show here</string>
 
     <string name="setting_sorting_title">Select a sorting Options (flag is kept in memory)</string>
     <string name="setting_button_confirm">OK</string>
