@@ -13,12 +13,6 @@ sealed interface RepositoriesFlowDestinations : Destinations {
         override val route: String = "repositories-screen"
     }
 
-    // Note ianhanniballake explanation -> https://stackoverflow.com/questions/69059149/how-pass-parcelable-argument-with-new-version-of-compose-navigation
-    // for the moment the repo details is very simple and we are going to be using a very few properties
-    // all of these properties are Ids on their own such as owner or repo names which is used to get more info if needed
-    //
-    // If data is more complex we can then decide not passing them through to avoid anti patterns
-    // alternatively we can make a new call in the viewModel of the details page as single source of truth
     object DetailRoute : RepositoriesFlowDestinations {
         const val ARG_KEY_DETAILS = "details"
         private const val detailsPageRoute = "repositories-details-screen"
