@@ -22,6 +22,9 @@ fun NavGraphBuilder.repositoriesNavGraph(
             RepositoriesScreen(
                 navigateToDetailScreen = { args ->
                     appState.navController.navigate(
+                        // Note the repo details is very simple and we are going to be using 5 properties
+                        // If data is more complex we should prevent passing it through to avoid anti patterns
+                        // alternatively we can make new call in the viewModel of the details page (could also add offline data source)
                         RepositoriesFlowDestinations.DetailRoute.withArgs(
                             RepositoriesFlowDestinations.DetailRoute.Args(
                                 owner = args.owner.login.encode(),
