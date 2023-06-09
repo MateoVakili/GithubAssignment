@@ -99,7 +99,7 @@ fun GithubRepoEventView(
         is DetailsScreenUiState.Loading -> Loading(text = stringResource(id = R.string.loading_event_title))
         is DetailsScreenUiState.Error -> ErrorView(error = uiState.throwable, onReload = onRetry)
         is DetailsScreenUiState.Success -> {
-            // in repo we already check if we have an event, call to .first() should get the event
+            // in GithubRepoInfoRepository we already check if we have an event, call to .first() should get the event
             // if the item is not there DetailsScreenUiState.Error  will be sent instead which is handled below
             val lastEvent = uiState.data.first()
             Text(

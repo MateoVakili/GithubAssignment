@@ -24,9 +24,7 @@ fun Toolbar(
     navigationIcon: @Composable () -> Unit = {},
 ) {
     CenterAlignedTopAppBar(
-        title = {
-            Text(text = title, fontWeight = FontWeight.Bold)
-        },
+        title = { Text(text = title, fontWeight = FontWeight.Bold) },
         actions = actions,
         navigationIcon = navigationIcon,
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(

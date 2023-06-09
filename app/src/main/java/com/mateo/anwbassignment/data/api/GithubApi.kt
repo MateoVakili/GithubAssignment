@@ -12,7 +12,7 @@ interface GithubApi {
     suspend fun getRepository(
         @Query(value = "page", encoded = true) page: Int? = null,
         @Query(value = "per_page", encoded = true) perPage: Int? = null,
-        @Query(value = "sort", encoded = true) sort: String = "stars",
+        @Query(value = "sort", encoded = true) sort: String,
         @Query(value = "q", encoded = true) q: String
     ): GithubSearchResponse
 

@@ -3,7 +3,9 @@ package com.mateo.anwbassignment.presentation.github.navigation
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.navigation.NavType
+import com.mateo.anwbassignment.domain.github.model.GithubRepositoriesItemDomainModel
 import com.mateo.anwbassignment.presentation.util.navigation.Destinations
+import com.mateo.anwbassignment.presentation.util.view.encode
 import com.mateo.anwbassignment.presentation.util.view.parcelable
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -15,26 +17,29 @@ sealed interface RepositoriesFlowDestinations : Destinations {
         override val route: String = "repositories-screen"
     }
 
-    // Note for the moment the repo details is very simple and we are going to be using 5 properties
-    // If data is more complex we should prevent passing it through to avoid anti patterns
-    // alternatively we can make new call in the viewModel of the details page (could also add offline data source)
-    object DetailRoute: RepositoriesFlowDestinations {
+    // Note ianhanniballake explanation -> https://stackoverflow.com/questions/69059149/how-pass-parcelable-argument-with-new-version-of-compose-navigation
+    // for the moment the repo details is very simple and we are going to be using a very few properties
+    // all of these properties are Ids on their own such as owner or repo names which is used to get more info if needed
+    //
+    // In this case the detail page is mostly showing the names and urls only which is why Im just passing the data
+    // If data is more complex we might then decide not passing them through to avoid anti patterns
+    // alternatively we can make a new call in the viewModel of the details page as single source of truth
+    object DetailRoute : RepositoriesFlowDestinations {
         const val ARG_KEY_DETAILS = "details"
         private const val detailsPageRoute = "repositories-details-screen"
-        private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
         override val route = "repositories-details-screen/{$ARG_KEY_DETAILS}"
+        private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
-        @Parcelize
-        data class Args(
-            val owner: String,
-            val ownerUrl: String,
-            val ownerAvatar: String?,
-            val repo: String,
-            val repoUrl: String
-        ) : Parcelable
-
-        fun withArgs(args: Args): String {
-            val arg = moshi.adapter(Args::class.java).toJson(args)
+        fun withArgs(data: GithubRepositoriesItemDomainModel): String {
+            val arg = moshi.adapter(Args::class.java).toJson(
+                Args(
+                    owner = data.owner.login.encode(),
+                    ownerUrl = data.owner.htmlUrl.encode(),
+                    repo = data.name.encode(),
+                    repoUrl = data.htmlUrl.encode(),
+                    ownerAvatar = data.owner.avatarUrl?.encode(),
+                )
+            )
             return "$detailsPageRoute/${arg}"
         }
 
@@ -51,8 +56,14 @@ sealed interface RepositoriesFlowDestinations : Destinations {
                 bundle.putParcelable(key, value)
             }
         }
+        @Parcelize
+        data class Args(
+            val owner: String,
+            val ownerUrl: String,
+            val ownerAvatar: String?,
+            val repo: String,
+            val repoUrl: String
+        ) : Parcelable
     }
 }
-
-
 

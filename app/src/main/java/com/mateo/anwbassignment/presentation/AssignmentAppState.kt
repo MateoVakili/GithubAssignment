@@ -30,8 +30,6 @@ class AppState(
     private val currentDestination: NavDestination?
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination
 
-    // in this case we don't have a bottom bar otherwise we would have had something like TopDestinations sealed class
-    // however in this case we can just use the start destination of our existing navGraph
     val isTopLevelDestination : Boolean
         @Composable get() = RepositoriesRoute.route == currentDestination?.route
 
