@@ -11,8 +11,7 @@ class GithubMetaDataInterceptor @Inject constructor() : Interceptor {
             chain
                 .request()
                 .newBuilder()
-                // would normally handle this in a different interceptor along side an authenticator.
-                // using the above and a session manager we could also have a login flow.
+                // would normally handle this in a different interceptor along side an authenticator from OKHTTP with login flow
                 // NOTE: to prevent errors from github on rate limit please put a token here and uncomment
 //                .addHeader(
 //                    "Authorization",
