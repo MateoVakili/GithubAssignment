@@ -20,7 +20,6 @@ fun NavGraphBuilder.repositoriesNavGraph(
     ) {
         composable(route = TopDestinations.RepositoriesRoute.route) {
             RepositoriesScreen(
-                appState = appState,
                 navigateToDetailScreen = { args ->
                     appState.navController.navigate(
                         RepositoriesFlowDestinations.DetailRoute.withArgs(

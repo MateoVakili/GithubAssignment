@@ -14,28 +14,21 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 @HiltViewModel
 class RepositoriesViewModel @Inject constructor(
-    private val repository: GithubRepoInfoRepository,
+    repository: GithubRepoInfoRepository,
     @Dispatcher(AssignmentDispatchers.IO) private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
+    // could add a settings option for this
+    // sort by stars for-example... was not part of assignment
     private val _sortOption = MutableStateFlow(SortingOptions.UPDATED)
-    val sortOption = _sortOption.asStateFlow()
 
-    var githubRepositories: Flow<PagingData<GithubRepositoriesItemDomainModel>> = getPagingSource()
-
-    fun updateSortOption(option: SortingOptions) {
-        _sortOption.value = option
-        githubRepositories = getPagingSource()
-    }
-
-    private fun getPagingSource() = repository
-        .searchRepositories(
+    var githubRepositories: Flow<PagingData<GithubRepositoriesItemDomainModel>> =
+        repository.searchRepositories(
             users = AssignmentRequiredUsers.values().map { it.value },
             sortOption = _sortOption.value
         )

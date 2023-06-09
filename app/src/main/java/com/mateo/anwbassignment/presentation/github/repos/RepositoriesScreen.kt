@@ -22,9 +22,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -45,43 +42,20 @@ import coil.request.ImageRequest
 import com.mateo.anwbassignment.R
 import com.mateo.anwbassignment.domain.core.EmptyResponse
 import com.mateo.anwbassignment.domain.github.model.GithubRepositoriesItemDomainModel
-import com.mateo.anwbassignment.presentation.AppState
 import com.mateo.anwbassignment.presentation.util.view.ErrorView
 import com.mateo.anwbassignment.presentation.util.view.Loading
-import com.mateo.anwbassignment.presentation.util.view.SettingsDialog
 
 @Composable
 fun RepositoriesScreen(
-    appState: AppState,
     navigateToDetailScreen: (GithubRepositoriesItemDomainModel) -> Unit,
     viewModel: RepositoriesViewModel = hiltViewModel()
 ) {
     val githubRepositories = viewModel.githubRepositories.collectAsLazyPagingItems()
-    val isShowingDialog = rememberSaveable { mutableStateOf(false) }
-    if (isShowingDialog.value || appState.shouldShowSettings) {
-        isShowingDialog.value = true
-        appState.setShowSettings(true)
-        SettingsDialog(
-            currentSortOption = viewModel.sortOption.collectAsState().value,
-            onDismissAction = {
-                isShowingDialog.value = false
-                appState.setShowSettings(false)
-            },
-            onSortOptionAction = {
-                viewModel.updateSortOption(it)
-            }
-        )
-    }
-
     RepositoriesScreenStateless(
         githubRepositories = githubRepositories,
         loadState = githubRepositories.loadState,
-        onRepoClickedAction = { args ->
-            navigateToDetailScreen(args)
-        },
-        onRetryAction = {
-            githubRepositories.retry()
-        }
+        onRepoClickedAction = { navigateToDetailScreen(it) },
+        onRetryAction = { githubRepositories.retry() }
     )
 }
 
@@ -169,12 +143,10 @@ private fun RepositoriesScreenStateless(
                         }
                     }
                 }
-
                 is LoadState.Loading -> loadingContent(
                     modifier = Modifier.padding(top = 24.dp, bottom = 32.dp),
                     text = R.string.loading_title
                 )
-
                 is LoadState.Error -> errorContent(
                     modifier = Modifier.padding(top = 24.dp, bottom = 32.dp),
                     throwable = state.error,
@@ -187,7 +159,6 @@ private fun RepositoriesScreenStateless(
                     modifier = Modifier.padding(bottom = 32.dp),
                     text = R.string.loading_more_title
                 )
-
                 is LoadState.Error -> errorContent(
                     modifier = Modifier.padding(bottom = 32.dp),
                     throwable = state.error,

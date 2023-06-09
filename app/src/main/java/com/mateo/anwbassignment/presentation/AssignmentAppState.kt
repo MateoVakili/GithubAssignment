@@ -2,10 +2,7 @@ package com.mateo.anwbassignment.presentation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
@@ -47,11 +44,4 @@ class AppState(
             RepositoriesFlowDestinations.DetailRoute.route -> currentBackStackEntryArg ?: stringResource(id = R.string.details_title)
             else -> stringResource(id = R.string.details_title)
         }
-
-    var shouldShowSettings by mutableStateOf(false)
-        private set
-
-    fun setShowSettings(shouldShow: Boolean) {
-        shouldShowSettings = shouldShow
-    }
 }

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Parcelable
 import java.net.URLDecoder
 import java.net.URLEncoder
-import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
