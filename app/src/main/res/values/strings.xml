@@ -5,8 +5,10 @@
     <string name="core_network_error_message">Please check your internet connection!</string>
     <string name="core_error_title">Oops</string>
     <string name="core_error_message">Something went wrong ! please try again.</string>
-    <string name="core_empty_title">Oh no!</string>
-    <string name="core_empty_message">Seems like there is no info to show here</string>
+    <string name="core_empty_title">content not available!</string>
+    <string name="core_empty_message">Seems like there is no info to show</string>
+    <string name="no_event_title">Event not found</string>
+    <string name="no_event_message">Seems like there is no events for this repository</string>
 
     <string name="setting_sorting_title">Select a sorting Options (flag is kept in memory)</string>
     <string name="setting_button_confirm">OK</string>

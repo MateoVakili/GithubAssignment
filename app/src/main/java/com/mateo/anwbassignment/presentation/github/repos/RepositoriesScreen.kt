@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material3.Card
@@ -24,10 +23,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -37,11 +32,10 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.mateo.anwbassignment.R
 import com.mateo.anwbassignment.domain.core.EmptyResponse
 import com.mateo.anwbassignment.domain.github.model.GithubRepositoriesItemDomainModel
+import com.mateo.anwbassignment.presentation.util.view.AvatarView
 import com.mateo.anwbassignment.presentation.util.view.ErrorView
 import com.mateo.anwbassignment.presentation.util.view.Loading
 
@@ -50,16 +44,16 @@ fun RepositoriesScreen(
     navigateToDetailScreen: (GithubRepositoriesItemDomainModel) -> Unit,
     viewModel: RepositoriesViewModel = hiltViewModel()
 ) {
-    val githubRepositories = viewModel.githubRepositories.collectAsLazyPagingItems()
-    RepositoriesScreenStateless(
-        githubRepositories = githubRepositories,
-        loadState = githubRepositories.loadState,
-        onRepoClickedAction = { navigateToDetailScreen(it) },
-        onRetryAction = { githubRepositories.retry() }
-    )
+    viewModel.githubRepositories.collectAsLazyPagingItems().run {
+        RepositoriesScreenStateless(
+            githubRepositories = this,
+            loadState = this.loadState,
+            onRepoClickedAction = { navigateToDetailScreen(it) },
+            onRetryAction = { retry() }
+        )
+    }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RepositoriesScreenStateless(
     loadState: CombinedLoadStates,
@@ -74,7 +68,7 @@ private fun RepositoriesScreenStateless(
                     if (githubRepositories.itemCount == 0) {
                         item {
                             ErrorView(
-                                error = EmptyResponse(),
+                                error = EmptyResponse(), // empty message with mapper
                                 onReload = onRetryAction,
                                 modifier = Modifier.fillMaxSize(),
                             )
@@ -85,68 +79,20 @@ private fun RepositoriesScreenStateless(
                                 if (it == 0) {
                                     Spacer(modifier = Modifier.height(24.dp))
                                 }
-                                Card(
-                                    onClick = {
-                                        onRepoClickedAction(item)
-                                    },
-                                    modifier = Modifier.fillMaxWidth()
-                                ) {
-                                    Column(
-                                        modifier = Modifier
-                                            .background(MaterialTheme.colorScheme.onPrimaryContainer)
-                                            .fillMaxSize()
-                                            .padding(16.dp),
-                                        verticalArrangement = Arrangement.Center
-                                    ) {
-                                        Row(verticalAlignment = Alignment.CenterVertically) {
-                                            item.owner.let { owner ->
-                                                AsyncImage(
-                                                    model = ImageRequest.Builder(LocalContext.current)
-                                                        .data(owner.avatarUrl)
-                                                        .crossfade(true)
-                                                        .build(),
-                                                    placeholder = painterResource(R.drawable.avatar_placeholder),
-                                                    contentDescription = null,
-                                                    contentScale = ContentScale.Crop,
-                                                    modifier = Modifier
-                                                        .clip(CircleShape)
-                                                        .size(32.dp)
-                                                )
-                                                Spacer(modifier = Modifier.width(8.dp))
-                                            }
-                                            Text(
-                                                item.name,
-                                                overflow = TextOverflow.Ellipsis,
-                                                fontWeight = FontWeight.Bold,
-                                                modifier = Modifier.weight(1f)
-                                            )
-                                            item.language?.let { language ->
-                                                Spacer(modifier = Modifier.width(12.dp))
-                                                Icon(
-                                                    imageVector = Icons.Default.Build,
-                                                    modifier = Modifier
-                                                        .size(16.dp)
-                                                        .padding(end = 4.dp),
-                                                    contentDescription = null
-                                                )
-                                                Text(language)
-                                            }
-                                        }
-                                        item.description?.let { description ->
-                                            Spacer(modifier = Modifier.height(8.dp))
-                                            Text(description)
-                                        }
-                                    }
-                                }
-                                Spacer(modifier = Modifier.size(20.dp))
+                                RepositoryItem(
+                                    item = item,
+                                    onRepoClickedAction = onRepoClickedAction
+                                )
                             }
                         }
                     }
                 }
+
                 is LoadState.Loading -> loadingContent(
                     modifier = Modifier.padding(top = 24.dp, bottom = 32.dp),
                     text = R.string.loading_title
                 )
+
                 is LoadState.Error -> errorContent(
                     modifier = Modifier.padding(top = 24.dp, bottom = 32.dp),
                     throwable = state.error,
@@ -159,10 +105,66 @@ private fun RepositoriesScreenStateless(
                     modifier = Modifier.padding(bottom = 32.dp),
                     text = R.string.loading_more_title
                 )
+
                 is LoadState.Error -> errorContent(
                     modifier = Modifier.padding(bottom = 32.dp),
                     throwable = state.error,
                     onReload = onRetryAction,
+                )
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun RepositoryItem(
+    item: GithubRepositoriesItemDomainModel,
+    onRepoClickedAction: (GithubRepositoriesItemDomainModel) -> Unit,
+) {
+    Card(
+        onClick = { onRepoClickedAction(item) },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 20.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.onPrimaryContainer)
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                item.owner.let { owner ->
+                    AvatarView(
+                        size = 32.dp,
+                        url = owner.avatarUrl
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                }
+                Text(
+                    item.name,
+                    overflow = TextOverflow.Ellipsis,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.weight(1f)
+                )
+                item.language?.let { language ->
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Icon(
+                        imageVector = Icons.Default.Build,
+                        modifier = Modifier
+                            .size(16.dp)
+                            .padding(end = 4.dp),
+                        contentDescription = null
+                    )
+                    Text(language)
+                }
+            }
+            item.description?.let { description ->
+                Text(
+                    modifier = Modifier.padding(top = 8.dp),
+                    text = description
                 )
             }
         }

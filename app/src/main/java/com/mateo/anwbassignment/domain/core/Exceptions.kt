@@ -9,3 +9,5 @@ class NetworkException : AssignmentExceptions()
 class ServerException : AssignmentExceptions()
 
 class EmptyResponse : AssignmentExceptions()
+
+class EventNotFound : AssignmentExceptions()

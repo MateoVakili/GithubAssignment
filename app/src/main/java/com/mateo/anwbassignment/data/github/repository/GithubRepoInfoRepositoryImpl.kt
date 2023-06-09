@@ -1,6 +1,5 @@
 package com.mateo.anwbassignment.data.github.repository
 
-import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -11,6 +10,7 @@ import com.mateo.anwbassignment.data.api.network.Dispatcher
 import com.mateo.anwbassignment.data.github.mapper.toDomainModels
 import com.mateo.anwbassignment.data.github.paging.GithubRepoPagingSource
 import com.mateo.anwbassignment.domain.core.EmptyResponse
+import com.mateo.anwbassignment.domain.core.EventNotFound
 import com.mateo.anwbassignment.domain.core.LoadingResult
 import com.mateo.anwbassignment.domain.github.model.GithubEventDomainModel
 import com.mateo.anwbassignment.domain.github.model.GithubRepositoriesItemDomainModel
@@ -60,7 +60,7 @@ class GithubRepoInfoRepositoryImpl @Inject constructor(
             if(res.isNotEmpty()) {
                 LoadingResult.Success(res)
             } else {
-                LoadingResult.Error(EmptyResponse())
+                LoadingResult.Error(EventNotFound())
             }
         } catch (exception: Exception) {
             LoadingResult.Error(exceptionMapper.mapException(exception))
