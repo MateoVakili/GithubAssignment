@@ -23,14 +23,10 @@ class RepositoriesViewModel @Inject constructor(
     @Dispatcher(AssignmentDispatchers.IO) private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
-    // could add a settings option for this
-    // sort by stars for-example... was not part of assignment
-    private val _sortOption = MutableStateFlow(SortingOptions.UPDATED)
-
     var githubRepositories: Flow<PagingData<GithubRepositoriesItemDomainModel>> =
         repository.searchRepositories(
             users = AssignmentRequiredUsers.values().map { it.value },
-            sortOption = _sortOption.value
+            sortOption = SortingOptions.UPDATED // e.g could add a settings option for this to be sorted by stars
         )
         .flowOn(ioDispatcher)
         .cachedIn(viewModelScope)
