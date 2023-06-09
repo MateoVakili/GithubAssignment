@@ -9,13 +9,12 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.parcelize.Parcelize
 
-sealed interface TopDestinations : Destinations {
-    object RepositoriesRoute : TopDestinations {
+// routes for repositories navGraph
+sealed interface RepositoriesFlowDestinations : Destinations {
+    object RepositoriesRoute : RepositoriesFlowDestinations {
         override val route: String = "repositories-screen"
     }
-}
 
-sealed interface RepositoriesFlowDestinations : Destinations {
     // Note for the moment the repo details is very simple and we are going to be using 5 properties
     // If data is more complex we should prevent passing it through to avoid anti patterns
     // alternatively we can make new call in the viewModel of the details page (could also add offline data source)

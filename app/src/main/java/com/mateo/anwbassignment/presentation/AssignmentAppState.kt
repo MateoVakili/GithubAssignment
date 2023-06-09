@@ -9,8 +9,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.mateo.anwbassignment.R
-import com.mateo.anwbassignment.presentation.github.navigation.RepositoriesFlowDestinations
-import com.mateo.anwbassignment.presentation.github.navigation.TopDestinations
+import com.mateo.anwbassignment.presentation.github.navigation.RepositoriesFlowDestinations.RepositoriesRoute
+import com.mateo.anwbassignment.presentation.github.navigation.RepositoriesFlowDestinations.DetailRoute
 import com.mateo.anwbassignment.presentation.util.view.decode
 import com.mateo.anwbassignment.presentation.util.view.parcelable
 
@@ -30,18 +30,20 @@ class AppState(
     private val currentDestination: NavDestination?
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination
 
+    // in this case we don't have a bottom bar otherwise we would have had something like TopDestinations sealed class
+    // however in this case we can just use the start destination of our existing navGraph
     val isTopLevelDestination : Boolean
-        @Composable get() = TopDestinations.RepositoriesRoute.route == currentDestination?.route
+        @Composable get() = RepositoriesRoute.route == currentDestination?.route
 
     private val currentBackStackEntryArg: String?
         @Composable get() = navController.currentBackStackEntry
-            ?.arguments?.parcelable<RepositoriesFlowDestinations.DetailRoute.Args>(
-                RepositoriesFlowDestinations.DetailRoute.ARG_KEY_DETAILS)?.repo?.decode()
+            ?.arguments?.parcelable<DetailRoute.Args>(
+                DetailRoute.ARG_KEY_DETAILS)?.repo?.decode()
 
     val currentTitle: String
         @Composable get() = when (currentDestination?.route) {
-            TopDestinations.RepositoriesRoute.route -> stringResource(id = R.string.app_name)
-            RepositoriesFlowDestinations.DetailRoute.route -> currentBackStackEntryArg ?: stringResource(id = R.string.details_title)
+            RepositoriesRoute.route -> stringResource(id = R.string.app_name)
+            DetailRoute.route -> currentBackStackEntryArg ?: stringResource(id = R.string.details_title)
             else -> stringResource(id = R.string.details_title)
         }
 }

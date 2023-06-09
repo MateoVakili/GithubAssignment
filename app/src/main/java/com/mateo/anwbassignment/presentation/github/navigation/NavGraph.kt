@@ -16,9 +16,9 @@ fun NavGraphBuilder.repositoriesNavGraph(
 ) {
     navigation(
         route = repositoryGraphRoute,
-        startDestination = TopDestinations.RepositoriesRoute.route,
+        startDestination = RepositoriesFlowDestinations.RepositoriesRoute.route,
     ) {
-        composable(route = TopDestinations.RepositoriesRoute.route) {
+        composable(route = RepositoriesFlowDestinations.RepositoriesRoute.route) {
             RepositoriesScreen(
                 navigateToDetailScreen = { args ->
                     appState.navController.navigate(
