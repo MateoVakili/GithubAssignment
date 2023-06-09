@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">ANWBAssignment</string>
+    <string name="core_button_retry">Retry</string>
+    <string name="core_network_error_title">Network issue</string>
+    <string name="core_network_error_message">Please check your internet connection!</string>
+    <string name="core_error_title">Oops</string>
+    <string name="core_error_message">Something went wrong ! please try again.</string>
+    <string name="core_empty_title">Oh no!</string>
+    <string name="core_empty_message">There is nothing to see show here.</string>
+
+    <string name="setting_sorting_title">Select a sorting Options (flag is kept in memory)</string>
+    <string name="setting_button_confirm">OK</string>
+    <string name="settings_title">Settings</string>
+    <string name="loading_title">Loading repositories …</string>
+    <string name="loading_more_title">Loading more repositories …</string>
+    <string name="details_title">Details</string>
+
+    <string name="loading_event_title">Loading event …</string>
+    <string name="last_event_author">Last event by: %s</string>
+    <string name="last_event_type">Event type: %s</string>
+    <string name="last_event_date">Created at %s</string>
+    <string name="details_author">Author: %s</string>
+    <string name="details_repository">Repository: %s</string>
+
+</resources>
