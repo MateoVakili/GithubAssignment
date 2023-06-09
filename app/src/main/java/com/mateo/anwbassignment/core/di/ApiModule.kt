@@ -33,7 +33,7 @@ class ApiModule {
             .addConverterFactory(MoshiConverterFactory.create(moshiBuilder.build()))
 
         // we don't have debug/test/staging/release builds so base url is the same
-        // hence why its just hardcoded here for now
+        // hence why its just hardcoded here for now instead of buildConf in gradle for example
         return builder
             .baseUrl("https://api.github.com")
             .build()
