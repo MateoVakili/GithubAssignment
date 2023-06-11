@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,14 +27,16 @@ fun Loading(
     text: String
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth().then(modifier)
+        modifier = Modifier
+            .fillMaxWidth()
+            .then(modifier)
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.onPrimaryContainer)
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(16.dp)
         ) {
             Spacer(modifier = Modifier.height(24.dp))
@@ -56,8 +57,10 @@ fun Loading(
 @Preview
 @Composable
 fun LoadingPreview() {
-    Loading(
-        modifier = Modifier.background(Color.White),
-        text = stringResource(id = R.string.loading_title)
-    )
+    PreviewBackground {
+        Loading(
+            modifier = Modifier.background(Color.White),
+            text = stringResource(id = R.string.loading_title)
+        )
+    }
 }

@@ -34,14 +34,16 @@ fun ErrorView(
 ) {
     val mapper = UIExceptionMapper()
     Card(
-        modifier = Modifier.fillMaxWidth().then(modifier)
+        modifier = Modifier
+            .fillMaxWidth()
+            .then(modifier)
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.onPrimaryContainer)
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(16.dp)
         ) {
             Spacer(modifier = Modifier.height(24.dp))
@@ -69,9 +71,13 @@ fun ErrorView(
 @Composable
 @Preview
 private fun PreviewError() {
-    ErrorView(
-        error = NetworkException(),
-        onReload = {},
-        modifier = Modifier.fillMaxSize()
-    )
+    PreviewBackground {
+        ErrorView(
+            error = NetworkException(),
+            onReload = {},
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White)
+        )
+    }
 }

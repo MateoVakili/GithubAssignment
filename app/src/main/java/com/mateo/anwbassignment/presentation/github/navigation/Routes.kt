@@ -1,7 +1,8 @@
 package com.mateo.anwbassignment.presentation.github.navigation
 
 import com.mateo.anwbassignment.domain.github.model.GithubRepositoriesItemDomainModel
-import com.mateo.anwbassignment.presentation.github.detail.DetailsPageArg
+import com.mateo.anwbassignment.domain.github.model.GithubRepositoryDetails
+import com.mateo.anwbassignment.domain.github.model.encode
 import com.mateo.anwbassignment.presentation.util.navigation.Destinations
 import com.mateo.anwbassignment.presentation.util.view.encode
 import com.squareup.moshi.Moshi
@@ -15,21 +16,20 @@ sealed interface RepositoriesFlowDestinations : Destinations {
 
     object DetailRoute : RepositoriesFlowDestinations {
         const val ARG_KEY_DETAILS = "details"
-        private const val detailsPageRoute = "repositories-details-screen"
+        private const val routeWithoutArgs = "repositories-details-screen"
         override val route = "repositories-details-screen/{$ARG_KEY_DETAILS}"
         private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
         fun withArgs(data: GithubRepositoriesItemDomainModel): String {
-            val arg = moshi.adapter(DetailsPageArg::class.java).toJson(
-                DetailsPageArg(
-                    owner = data.owner.login.encode(),
-                    ownerUrl = data.owner.htmlUrl.encode(),
-                    repo = data.name.encode(),
-                    repoUrl = data.htmlUrl.encode(),
-                    ownerAvatar = data.owner.avatarUrl?.encode(),
-                )
+            val arg = moshi.adapter(GithubRepositoryDetails::class.java).toJson(
+                GithubRepositoryDetails(
+                    owner = data.owner.login,
+                    ownerUrl = data.owner.htmlUrl,
+                    repo = data.name,
+                    repoUrl = data.htmlUrl,
+                ).encode()
             )
-            return "$detailsPageRoute/$arg"
+            return "$routeWithoutArgs/$arg"
         }
     }
 }

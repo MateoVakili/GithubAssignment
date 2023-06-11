@@ -1,4 +1,4 @@
-package com.mateo.anwbassignment.presentation.github.repos
+package com.mateo.anwbassignment.presentation.github.repospage
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,18 +26,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
+import androidx.paging.LoadStates
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.mateo.anwbassignment.R
 import com.mateo.anwbassignment.domain.core.EmptyResponse
+import com.mateo.anwbassignment.domain.github.factory.GithubRepositoriesItemDomainModelFactory
 import com.mateo.anwbassignment.domain.github.model.GithubRepositoriesItemDomainModel
 import com.mateo.anwbassignment.presentation.util.view.AvatarView
 import com.mateo.anwbassignment.presentation.util.view.ErrorView
 import com.mateo.anwbassignment.presentation.util.view.Loading
+import com.mateo.anwbassignment.presentation.util.view.PreviewBackground
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
 fun RepositoriesScreen(
@@ -124,14 +130,12 @@ private fun RepositoryItem(
 ) {
     Card(
         onClick = { onRepoClickedAction(item) },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 20.dp)
+        modifier = Modifier.padding(bottom = 20.dp)
     ) {
         Column(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.onPrimaryContainer)
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(16.dp),
             verticalArrangement = Arrangement.Center
         ) {
@@ -190,6 +194,17 @@ private fun LazyListScope.errorContent(
             error = throwable,
             onReload = onReload,
             modifier = modifier
+        )
+    }
+}
+
+@Preview
+@Composable
+fun RepositoryItemPreview() {
+    PreviewBackground {
+        RepositoryItem(
+            item = GithubRepositoriesItemDomainModelFactory.createInstance(),
+            onRepoClickedAction = {}
         )
     }
 }

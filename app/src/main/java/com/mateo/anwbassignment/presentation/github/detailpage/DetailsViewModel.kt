@@ -1,10 +1,12 @@
-package com.mateo.anwbassignment.presentation.github.detail
+package com.mateo.anwbassignment.presentation.github.detailpage
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mateo.anwbassignment.domain.core.LoadingResult
 import com.mateo.anwbassignment.domain.github.model.GithubEventDomainModel
+import com.mateo.anwbassignment.domain.github.model.GithubRepositoryDetails
+import com.mateo.anwbassignment.domain.github.model.decode
 import com.mateo.anwbassignment.domain.github.repository.GithubRepoInfoRepository
 import com.mateo.anwbassignment.presentation.github.navigation.RepositoriesFlowDestinations.DetailRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +21,7 @@ class DetailsViewModel @Inject constructor(
     private val repository: GithubRepoInfoRepository,
 ) : ViewModel() {
 
-    val args: DetailsPageArg = checkNotNull(savedStateHandle[DetailRoute.ARG_KEY_DETAILS])
+    val args: GithubRepositoryDetails = checkNotNull<GithubRepositoryDetails>(savedStateHandle[DetailRoute.ARG_KEY_DETAILS]).decode()
     private val _uiState = MutableStateFlow<DetailsScreenUiState>(DetailsScreenUiState.Loading)
     val uiState = _uiState.asStateFlow()
 

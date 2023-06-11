@@ -1,4 +1,4 @@
-package com.mateo.anwbassignment.presentation.github.repos
+package com.mateo.anwbassignment.presentation.github.repospage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,7 +13,6 @@ import com.mateo.anwbassignment.domain.github.repository.GithubRepoInfoRepositor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
@@ -26,7 +25,8 @@ class RepositoriesViewModel @Inject constructor(
     var githubRepositories: Flow<PagingData<GithubRepositoriesItemDomainModel>> =
         repository.searchRepositories(
             users = AssignmentRequiredUsers.values().map { it.value },
-            sortOption = SortingOptions.UPDATED // e.g could add a settings option for this to be sorted by stars
+            // e.g could add a settings option for this to be sorted by stars for example
+            sortOption = SortingOptions.UPDATED
         )
         .flowOn(ioDispatcher)
         .cachedIn(viewModelScope)

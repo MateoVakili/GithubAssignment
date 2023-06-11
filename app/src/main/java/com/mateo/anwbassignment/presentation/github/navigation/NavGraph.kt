@@ -5,9 +5,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.mateo.anwbassignment.presentation.AppState
-import com.mateo.anwbassignment.presentation.github.detail.DetailsPageParamType
-import com.mateo.anwbassignment.presentation.github.detail.DetailsScreen
-import com.mateo.anwbassignment.presentation.github.repos.RepositoriesScreen
+import com.mateo.anwbassignment.presentation.github.detailpage.DetailsScreen
+import com.mateo.anwbassignment.presentation.github.navigation.types.DetailsPageParamType
+import com.mateo.anwbassignment.presentation.github.repospage.RepositoriesScreen
 
 const val repositoryGraphRoute = "repositories_nav_graph"
 
@@ -27,7 +27,7 @@ fun NavGraphBuilder.repositoriesNavGraph(
                         appState.navController.navigate(
                             RepositoriesFlowDestinations.DetailRoute.withArgs(args)
                         )
-                    },
+                    }
                 )
             }
         )
@@ -41,7 +41,7 @@ fun NavGraphBuilder.repositoriesNavGraph(
                     type = DetailsPageParamType()
                     nullable = false
                 }
-            ),
+            )
         )
     }
 }
