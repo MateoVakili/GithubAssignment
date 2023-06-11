@@ -10,7 +10,7 @@ import com.mateo.anwbassignment.data.api.network.Dispatcher
 import com.mateo.anwbassignment.data.github.mapper.toDomainModels
 import com.mateo.anwbassignment.data.github.paging.GithubRepoPagingSource
 import com.mateo.anwbassignment.domain.core.EventNotFound
-import com.mateo.anwbassignment.domain.core.LoadingResult
+import com.mateo.anwbassignment.domain.core.network.LoadingResult
 import com.mateo.anwbassignment.domain.github.model.GithubEventDomainModel
 import com.mateo.anwbassignment.domain.github.model.GithubRepositoriesItemDomainModel
 import com.mateo.anwbassignment.domain.github.model.SortingOptions

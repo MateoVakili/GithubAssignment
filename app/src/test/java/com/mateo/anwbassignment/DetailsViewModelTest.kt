@@ -2,7 +2,7 @@ package com.mateo.anwbassignment
 
 import androidx.lifecycle.SavedStateHandle
 import com.mateo.anwbassignment.domain.core.AssignmentExceptions
-import com.mateo.anwbassignment.domain.core.LoadingResult
+import com.mateo.anwbassignment.domain.core.network.LoadingResult
 import com.mateo.anwbassignment.domain.github.factory.GithubEventDomainModelFactory
 import com.mateo.anwbassignment.domain.github.factory.GithubRepositoryDetailsFactory
 import com.mateo.anwbassignment.domain.github.repository.GithubRepoInfoRepository

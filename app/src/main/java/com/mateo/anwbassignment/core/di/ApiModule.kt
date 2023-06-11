@@ -2,7 +2,7 @@ package com.mateo.anwbassignment.core.di
 
 import com.mateo.anwbassignment.data.api.GithubApi
 import com.mateo.anwbassignment.data.api.interceptor.GithubMetaDataInterceptor
-import com.squareup.moshi.Moshi
+import com.mateo.anwbassignment.domain.core.network.MoshiHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,8 +19,7 @@ class ApiModule {
     @Provides
     fun provideApi(
         loggingInterceptor: HttpLoggingInterceptor,
-        githubMetaDataInterceptor: GithubMetaDataInterceptor,
-        moshiBuilder: Moshi.Builder,
+        githubMetaDataInterceptor: GithubMetaDataInterceptor
     ): GithubApi {
 
         val client: OkHttpClient = OkHttpClient.Builder()
@@ -30,7 +29,7 @@ class ApiModule {
 
         val builder = Retrofit.Builder()
             .client(client)
-            .addConverterFactory(MoshiConverterFactory.create(moshiBuilder.build()))
+            .addConverterFactory(MoshiConverterFactory.create(MoshiHelper()))
 
         // we don't have debug/test/staging/release builds so base url is the same
         // hence why its just hardcoded here for now instead of buildConf in gradle for example

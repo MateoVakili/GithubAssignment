@@ -1,7 +1,7 @@
 package com.mateo.anwbassignment.domain.github.repository
 
 import androidx.paging.PagingData
-import com.mateo.anwbassignment.domain.core.LoadingResult
+import com.mateo.anwbassignment.domain.core.network.LoadingResult
 import com.mateo.anwbassignment.domain.github.model.GithubEventDomainModel
 import com.mateo.anwbassignment.domain.github.model.GithubRepositoriesItemDomainModel
 import com.mateo.anwbassignment.domain.github.model.SortingOptions

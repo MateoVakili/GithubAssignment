@@ -3,7 +3,7 @@ package com.mateo.anwbassignment.presentation.github.detailpage
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mateo.anwbassignment.domain.core.LoadingResult
+import com.mateo.anwbassignment.domain.core.network.LoadingResult
 import com.mateo.anwbassignment.domain.github.model.GithubEventDomainModel
 import com.mateo.anwbassignment.domain.github.model.GithubRepositoryDetails
 import com.mateo.anwbassignment.domain.github.model.decode
