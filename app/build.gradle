@@ -17,14 +17,13 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
+        vectorDrawables { useSupportLibrary true }
+        // we don't have debug/test/staging/release builds so base url is the same
+        buildConfigField("String", "SERVER_URL", "\"https://api.github.com\"")
     }
     buildTypes {
         release {
             minifyEnabled false
-            buildConfigField("String", "SERVER_URL", "\"https://api.github.com\"")
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

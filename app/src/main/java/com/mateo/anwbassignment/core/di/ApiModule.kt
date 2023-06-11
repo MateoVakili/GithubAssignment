@@ -1,5 +1,6 @@
 package com.mateo.anwbassignment.core.di
 
+import com.mateo.anwbassignment.BuildConfig
 import com.mateo.anwbassignment.data.api.GithubApi
 import com.mateo.anwbassignment.data.api.interceptor.GithubMetaDataInterceptor
 import com.mateo.anwbassignment.domain.core.network.MoshiHelper
@@ -31,10 +32,8 @@ class ApiModule {
             .client(client)
             .addConverterFactory(MoshiConverterFactory.create(MoshiHelper()))
 
-        // we don't have debug/test/staging/release builds so base url is the same
-        // hence why its just hardcoded here for now instead of buildConf in gradle for example
         return builder
-            .baseUrl("https://api.github.com")
+            .baseUrl(BuildConfig.SERVER_URL)
             .build()
             .create(GithubApi::class.java)
     }
