@@ -23,9 +23,9 @@ fun NavGraphBuilder.repositoriesNavGraph(
             route = RepositoriesFlowDestinations.RepositoriesRoute.route,
             content = {
                 RepositoriesScreen(
-                    navigateToDetailScreen = { args ->
+                    navigateToDetailScreen = {
                         appState.navController.navigate(
-                            RepositoriesFlowDestinations.DetailRoute.withArgs(args)
+                            RepositoriesFlowDestinations.DetailRoute.withArgs(it)
                         )
                     }
                 )

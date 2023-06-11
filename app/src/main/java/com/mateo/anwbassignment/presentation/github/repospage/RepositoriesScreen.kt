@@ -31,23 +31,21 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
-import androidx.paging.LoadStates
-import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.mateo.anwbassignment.R
 import com.mateo.anwbassignment.domain.core.EmptyResponse
 import com.mateo.anwbassignment.domain.github.factory.GithubRepositoriesItemDomainModelFactory
 import com.mateo.anwbassignment.domain.github.model.GithubRepositoriesItemDomainModel
+import com.mateo.anwbassignment.domain.github.model.GithubRepositoryDetails
 import com.mateo.anwbassignment.presentation.util.view.AvatarView
 import com.mateo.anwbassignment.presentation.util.view.ErrorView
 import com.mateo.anwbassignment.presentation.util.view.Loading
 import com.mateo.anwbassignment.presentation.util.view.PreviewBackground
-import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
 fun RepositoriesScreen(
-    navigateToDetailScreen: (GithubRepositoriesItemDomainModel) -> Unit,
+    navigateToDetailScreen: (GithubRepositoryDetails) -> Unit,
     viewModel: RepositoriesViewModel = hiltViewModel()
 ) {
     viewModel.githubRepositories.collectAsLazyPagingItems().run {
@@ -65,7 +63,7 @@ private fun RepositoriesScreenStateless(
     loadState: CombinedLoadStates,
     githubRepositories: LazyPagingItems<GithubRepositoriesItemDomainModel>,
     onRetryAction: () -> Unit,
-    onRepoClickedAction: (GithubRepositoriesItemDomainModel) -> Unit,
+    onRepoClickedAction: (GithubRepositoryDetails) -> Unit,
 ) {
     Column {
         LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)) {
@@ -126,10 +124,19 @@ private fun RepositoriesScreenStateless(
 @Composable
 private fun RepositoryItem(
     item: GithubRepositoriesItemDomainModel,
-    onRepoClickedAction: (GithubRepositoriesItemDomainModel) -> Unit,
+    onRepoClickedAction: (GithubRepositoryDetails) -> Unit,
 ) {
     Card(
-        onClick = { onRepoClickedAction(item) },
+        onClick = {
+            onRepoClickedAction(
+                GithubRepositoryDetails(
+                    owner = item.owner.login,
+                    ownerUrl = item.owner.htmlUrl,
+                    repo = item.name,
+                    repoUrl = item.htmlUrl,
+                )
+            )
+        },
         modifier = Modifier.padding(bottom = 20.dp)
     ) {
         Column(
