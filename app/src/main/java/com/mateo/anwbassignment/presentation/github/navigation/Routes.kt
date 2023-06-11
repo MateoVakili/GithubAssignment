@@ -2,7 +2,6 @@ package com.mateo.anwbassignment.presentation.github.navigation
 
 import com.mateo.anwbassignment.domain.core.network.MoshiHelper
 import com.mateo.anwbassignment.domain.github.model.GithubRepositoryDetails
-import com.mateo.anwbassignment.domain.github.model.encode
 import com.mateo.anwbassignment.presentation.util.navigation.Destinations
 
 // routes for repositories navGraph

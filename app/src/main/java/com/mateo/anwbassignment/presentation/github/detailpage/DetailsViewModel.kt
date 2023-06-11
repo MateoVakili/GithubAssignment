@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.mateo.anwbassignment.domain.core.network.LoadingResult
 import com.mateo.anwbassignment.domain.github.model.GithubEventDomainModel
 import com.mateo.anwbassignment.domain.github.model.GithubRepositoryDetails
-import com.mateo.anwbassignment.domain.github.model.decode
 import com.mateo.anwbassignment.domain.github.repository.GithubRepoInfoRepository
 import com.mateo.anwbassignment.presentation.github.navigation.RepositoriesFlowDestinations.DetailRoute
 import dagger.hilt.android.lifecycle.HiltViewModel

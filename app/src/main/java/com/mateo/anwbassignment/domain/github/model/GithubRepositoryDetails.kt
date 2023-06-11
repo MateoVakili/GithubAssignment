@@ -11,23 +11,24 @@ data class GithubRepositoryDetails(
     val ownerUrl: String,
     val repo: String,
     val repoUrl: String
-) : Parcelable
+) : Parcelable {
+    fun decode() : GithubRepositoryDetails{
+        return this.copy(
+            owner = owner.decode(),
+            ownerUrl = ownerUrl.decode(),
+            repo = repo.decode(),
+            repoUrl = repoUrl.decode()
+        )
+    }
 
-
-fun GithubRepositoryDetails.decode() : GithubRepositoryDetails{
-    return this.copy(
-        owner = owner.decode(),
-        ownerUrl = ownerUrl.decode(),
-        repo = repo.decode(),
-        repoUrl = repoUrl.decode()
-    )
+    fun encode() : GithubRepositoryDetails{
+        return this.copy(
+            owner = owner.encode(),
+            ownerUrl = ownerUrl.encode(),
+            repo = repo.encode(),
+            repoUrl = repoUrl.encode()
+        )
+    }
 }
 
-fun GithubRepositoryDetails.encode() : GithubRepositoryDetails{
-    return this.copy(
-        owner = owner.encode(),
-        ownerUrl = ownerUrl.encode(),
-        repo = repo.encode(),
-        repoUrl = repoUrl.encode()
-    )
-}
+

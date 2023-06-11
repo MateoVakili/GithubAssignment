@@ -7,7 +7,6 @@ import com.mateo.anwbassignment.domain.core.NetworkException
 import com.mateo.anwbassignment.domain.core.ServerException
 import com.mateo.anwbassignment.domain.core.network.MoshiHelper
 import com.squareup.moshi.JsonDataException
-import com.squareup.moshi.Moshi
 import retrofit2.HttpException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
