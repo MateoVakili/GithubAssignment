@@ -2,7 +2,7 @@ package com.mateo.anwbassignment.core.di
 
 import com.mateo.anwbassignment.BuildConfig
 import com.mateo.anwbassignment.data.api.GithubApi
-import com.mateo.anwbassignment.data.api.interceptor.GithubMetaDataInterceptor
+import com.mateo.anwbassignment.data.api.interceptor.GithubDataInterceptor
 import com.mateo.anwbassignment.domain.core.network.MoshiHelper
 import dagger.Module
 import dagger.Provides
@@ -20,12 +20,12 @@ class ApiModule {
     @Provides
     fun provideApi(
         loggingInterceptor: HttpLoggingInterceptor,
-        githubMetaDataInterceptor: GithubMetaDataInterceptor
+        githubDataInterceptor: GithubDataInterceptor
     ): GithubApi {
 
         val client: OkHttpClient = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
-            .addInterceptor(githubMetaDataInterceptor)
+            .addInterceptor(githubDataInterceptor)
             .build()
 
         val builder = Retrofit.Builder()
